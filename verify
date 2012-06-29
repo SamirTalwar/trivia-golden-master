@@ -1,0 +1,27 @@
+#!/bin/bash
+
+command=$1
+dir=$2
+
+failures=0
+
+for file in $dir/*.out
+do
+    seed=`basename $file .out`
+    diff=`$command $seed | diff $file -`
+    if [[ ! -z $diff ]]
+    then
+        echo -e "\e[31m`basename $file` failed.\e[0m"
+        echo "$diff"
+        failures=$(($failures + 1))
+    fi
+done
+
+if [[ $failures -eq 0 ]]
+then
+    echo -e "\e[32mPassed.\e[0m"
+    exit 0
+else
+    echo -e "\e[31mThere were $failures failures.\e[0m"
+    exit 1
+fi

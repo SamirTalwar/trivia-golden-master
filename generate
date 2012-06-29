@@ -1,0 +1,12 @@
+#!/bin/bash
+
+command=$1
+runs=$2
+dir=$3
+
+mkdir -p $dir
+for i in `seq 1 $runs`
+do
+    seed=$RANDOM
+    $command $seed > $dir/$seed.out
+done

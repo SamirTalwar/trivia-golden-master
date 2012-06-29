@@ -1,0 +1,12 @@
+#!/bin/bash
+
+command=$1
+dir=$2
+
+failures=0
+
+for file in $dir/*.out
+do
+    seed=`basename $file .out`
+    $command $seed > $dir/$seed.out
+done
